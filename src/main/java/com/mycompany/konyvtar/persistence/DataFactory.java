@@ -322,8 +322,7 @@ public class DataFactory implements DataFactoryInterface {
     }
 
     @Override
-    public void ujhirkiiras(String targy, String szoveg
-    ) {
+    public void ujhirkiiras(String targy, String szoveg) {
         try {
             String sql = "insert into konyvtar.hirek(tema,szoveg) Values(?,?)";
             PreparedStatement prep = connection.prepareStatement(sql);
@@ -403,6 +402,5 @@ public class DataFactory implements DataFactoryInterface {
         }
 
     }
-
 
 }

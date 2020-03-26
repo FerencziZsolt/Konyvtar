@@ -38,6 +38,22 @@
             <button type="submit" class="btn btn-primary">Küldés</button>            
         </fieldset>
     </form>
+        <%        request.setCharacterEncoding("UTF-8");
+
+        String targy = "";
+        String szoveg = "";
+
+        if (request.getParameter("targy") != null) {
+            targy = request.getParameter("targy");
+        }
+        if (request.getParameter("editor1") != null) {
+            szoveg = request.getParameter("editor1");
+        }
+        if (!targy.equals("") || !szoveg.equals("")) {
+            LekerdezesekInterface lekerdezesek = new LekerdezesekImplements();
+            
+        }
+    %>
     
 
 

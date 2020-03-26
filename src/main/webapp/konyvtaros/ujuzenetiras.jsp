@@ -37,23 +37,28 @@
                 <textarea name="editor1"></textarea>
                 <script>CKEDITOR.replace('editor1');</script>
             </div>
-            <button type="submit" class="btn btn-primary">Felvitel</button>            
+            <button type="submit" class="btn btn-primary">Küldés</button>            
         </fieldset>
     </form>
 
     <%        request.setCharacterEncoding("UTF-8");
 
-        String olvasonev = "";
         String targy = "";
+        String olvasonev = "";
         String szoveg = "";
 
-        if (request.getParameter("targy") != null && request.getParameter("olvasonev") != null && request.getParameter("szoveg") != null) {
-            olvasonev = request.getParameter("olvasonev");
-            szoveg = request.getParameter("editor1");
+        if (request.getParameter("targy") != null) {
             targy = request.getParameter("targy");
-
-            DataFactoryInterface d = new DataFactory();
-            d.uzenetKuldesFelhasznalonak(olvasonev, targy, szoveg);
+        }
+        if (request.getParameter("olvasonev") != null) {
+            olvasonev = request.getParameter("olvasonev");
+        }
+        if (request.getParameter("editor1") != null) {
+            szoveg = request.getParameter("editor1");
+        }
+        if (!targy.equals("") || !olvasonev.equals("") || !szoveg.equals("")) {
+            DataFactoryInterface dfi = new DataFactory();
+            dfi.uzenetKuldesFelhasznalonak(olvasonev, targy, szoveg);
         }
 
     %>

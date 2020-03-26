@@ -306,18 +306,22 @@ public class DataFactory implements DataFactoryInterface {
 
     @Override
     public void uzenetKuldesFelhasznalonak(String olvasonev, String targy, String uzenet) {
-        try {
-            int olvasoid = olvasoid(olvasonev);
-            System.out.println("Üzenethez olvasoID: " + olvasoid + " " + olvasonev + " " + targy);
-            String sql = "insert into levelezes(olvasoid,targy,szoveg) Values(?,?,?)";
-            PreparedStatement prep = connection.prepareStatement(sql);
-            prep.setInt(1, olvasoid);
-            prep.setString(2, targy);
-            prep.setString(3, uzenet);
-            prep.execute();
+        if (olvasonev.length() == 0 || targy.length() == 0 || uzenet.length() == 0) {
 
-        } catch (SQLException e) {
-            System.out.println("Hiba hírbeszúrás közben: " + e);
+        } else {
+            try {
+                int olvasoid = olvasoid(olvasonev);
+                System.out.println("Üzenethez olvasoID: " + olvasoid + " " + olvasonev + " " + targy);
+                String sql = "insert into levelezes(olvasoid,targy,szoveg) Values(?,?,?)";
+                PreparedStatement prep = connection.prepareStatement(sql);
+                prep.setInt(1, olvasoid);
+                prep.setString(2, targy);
+                prep.setString(3, uzenet);
+                prep.execute();
+
+            } catch (SQLException e) {
+                System.out.println("Hiba hírbeszúrás közben: " + e);
+            }
         }
     }
 

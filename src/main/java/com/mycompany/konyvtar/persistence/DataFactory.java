@@ -8,6 +8,7 @@ package com.mycompany.konyvtar.persistence;
 import com.mycompany.konyvtar.service.Hirek;
 import com.mycompany.konyvtar.service.Kolcsonzes;
 import com.mycompany.konyvtar.service.Konyv;
+import com.mycompany.konyvtar.service.Konyvtaroslevel;
 import com.mycompany.konyvtar.service.Levelezes;
 import com.mycompany.konyvtar.service.Olvaso;
 import java.sql.Connection;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public class DataFactory implements DataFactoryInterface {
 
-    private static final int KOLCSONZESIIDO = -4;
+    private static final int KOLCSONZESIIDO = 21;   //kölcsönzési idő 3 hét(21 nap)
 
     private Connection connection = Database.getConnection();
 
@@ -405,6 +406,48 @@ public class DataFactory implements DataFactoryInterface {
             System.out.println("Hiba visszahozott könyvnél: " + se);
         }
 
+    }
+
+    @Override
+    public void uzenetKonyvtarosnak(String olvasonev, String targy, String uzenet) {
+        try {
+            String sql = "Insert into konyvtaroslevel(olvasonev,targy,uzenet) Values(?,?,?)";
+            PreparedStatement prep = connection.prepareStatement(sql);
+            prep.setString(1, olvasonev);
+            prep.setString(2, targy);
+            prep.setString(3, uzenet);
+            prep.execute();
+        } catch (SQLException se) {
+            System.out.println("Könyvtárosnak üzenet hiba: ");
+        }
+    }
+
+    @Override
+    public List<Konyvtaroslevel> konyvtaroslevelei() {
+        List<Konyvtaroslevel> lista = new ArrayList();
+        try{
+        String sql="select * from konyvtaroslevel order by id desc";
+        Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String olvasonev = rs.getString("olvasonev");
+                String targy = rs.getString("targy");
+                String uzenet = rs.getString("uzenet");
+                Konyvtaroslevel kl = new Konyvtaroslevel(id, olvasonev, targy, uzenet);
+                lista.add(kl);
+            }
+        
+        }catch(SQLException se){
+            System.out.println("Hiba konyvtaroslevelei: "+se);
+        }
+        return lista;
+    }
+
+    @Override
+    public void kolcsonzeshoszabbitas(int id) {
+       
+        //kölcsönzés hoszabbítása: visszahozasdatuma + 21 nap!
     }
 
 }

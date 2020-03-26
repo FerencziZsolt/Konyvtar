@@ -6,6 +6,7 @@
 
 import com.mycompany.konyvtar.persistence.DataFactory;
 import com.mycompany.konyvtar.persistence.DataFactoryInterface;
+import com.mycompany.konyvtar.presentation.Authentication;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -50,18 +51,22 @@ public class Konyvtarteszt {
         //assertEquals(i, null);
         assertTrue(i == 5);
     }
-    
+
     @Test
-    public void datumteszt(){
+    public void datumteszt() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         c.getTime();
         System.out.println(df.format(c.getTimeInMillis()));
-    
-    
     }
 
-
+    @Test
+    public void felhasznaloUzenet() {
+        
+        Authentication aut = new Authentication();
+        String jelszo = aut.encoding("valcsi01");
+        System.out.println(jelszo);
+    }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

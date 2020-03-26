@@ -8,6 +8,7 @@ package com.mycompany.konyvtar.persistence;
 import com.mycompany.konyvtar.service.Hirek;
 import com.mycompany.konyvtar.service.Kolcsonzes;
 import com.mycompany.konyvtar.service.Konyv;
+import com.mycompany.konyvtar.service.Konyvtaroslevel;
 import com.mycompany.konyvtar.service.Levelezes;
 import com.mycompany.konyvtar.service.Olvaso;
 import java.util.Date;
@@ -48,16 +49,21 @@ public interface DataFactoryInterface {
     public List<Kolcsonzes> getAllRents();
 
     public void uzenetKuldesFelhasznalonak(String felhasznalonev, String targy, String uzenet);
-    
-    public void ujhirkiiras(String targy,String szoveg);
-    
+
+    public void ujhirkiiras(String targy, String szoveg);
+
     public List<Hirek> getAllNews();
-    
+
     public void hirttorol(int id);
 
     public List<Levelezes> getAllletter();
-    
+
     public void konyvetVisszahoz(int id);
+
+    public void uzenetKonyvtarosnak(String olvasonev, String targy, String uzenet);
+
+    public List<Konyvtaroslevel> konyvtaroslevelei();
     
+    public void kolcsonzeshoszabbitas(int id);
 
 }

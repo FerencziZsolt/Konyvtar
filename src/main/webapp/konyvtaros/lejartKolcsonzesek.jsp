@@ -49,6 +49,7 @@
                 <th ><h3>Könyvcím</h3></th>
                 <th ><h3>Lejárat dátuma</h3></th>
                 <th ><h3>Üzenet küldése</h3></th>
+                <th ><h3>Kölcsönzés hosszabbítás</h3></th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +68,12 @@
                 <td>
                     <form action="ujuzenetiras.jsp" method="Post">
                         <input type="submit" value="Üzenetküldés" class="btn btn-primary">
+                    </form>
+                </td>
+                <td>
+                    <form action="kolcsonzeshoszabbitas.jsp" method="Post">
+                        <input type="hidden" name="id" value="<%out.print(kolcsonzes.getKolcsonzesid());%>" />
+                        <input type="submit" value="Kölcsönzés hosszabbítás" class="btn btn-primary">
                     </form>
                 </td>
             </tr><%

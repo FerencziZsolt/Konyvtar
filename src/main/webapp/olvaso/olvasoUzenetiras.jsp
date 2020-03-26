@@ -1,3 +1,5 @@
+<%@page import="com.mycompany.konyvtar.presentation.Authentication"%>
+<%@page import="com.mycompany.konyvtar.service.Olvaso"%>
 <%@page import="com.mycompany.konyvtar.service.Hirek"%>
 <%@page import="java.util.List"%>
 <%@page import="com.mycompany.konyvtar.persistence.LekerdezesekImplements"%>
@@ -21,7 +23,7 @@
 <div class="container">   
 
 
-<form method="POST" action="uzenetkuldes.jsp">
+    <form method="POST" action="olvasoUzenetiras.jsp">
         <fieldset>
             <legend>Üzenet küldése a könyvtárosnak</legend>
             <div class="form-group">
@@ -30,7 +32,7 @@
                     <input class="form-control mr-sm-2" type="text" placeholder="Tárgy" name="targy">
                 </div>
             </div>
-          
+
             <div class="form-group">                    
                 <textarea name="editor1"></textarea>
                 <script>CKEDITOR.replace('editor1');</script>
@@ -38,28 +40,38 @@
             <button type="submit" class="btn btn-primary">Küldés</button>            
         </fieldset>
     </form>
-        <%        request.setCharacterEncoding("UTF-8");
+    <%        request.setCharacterEncoding("UTF-8");
+        DataFactoryInterface dfi = new DataFactory();
+        Authentication aut = new Authentication();
+                
+        
+        String usernev = (String) session.getAttribute("user");
+        String jelszo = aut.encoding((String) session.getAttribute("passw"));
+        
+        Olvaso olvaso = dfi.olvasotVisszaad(usernev, jelszo);
+        //out.print(olvaso.toString());
 
         String targy = "";
         String szoveg = "";
-
-        if (request.getParameter("targy") != null) {
-            targy = request.getParameter("targy");
-        }
-        if (request.getParameter("editor1") != null) {
-            szoveg = request.getParameter("editor1");
-        }
-        if (!targy.equals("") || !szoveg.equals("")) {
-            LekerdezesekInterface lekerdezesek = new LekerdezesekImplements();
+        String olvasoneve = olvaso.getNev();
+        
+    if (request.getParameter("targy") != null) {
+        targy = request.getParameter("targy");
+    }
+    if (request.getParameter("editor1") != null) {
+        szoveg = request.getParameter("editor1");
+    }
+    if (!targy.equals("") || !szoveg.equals("")) {
+        dfi.uzenetKonyvtarosnak(olvasoneve, targy, szoveg);
             
-        }
+    }
     %>
-    
 
 
 
 
 
 
-    </div>
-    <div id="footer"></div>
+
+</div>
+<div id="footer"></div>

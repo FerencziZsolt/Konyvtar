@@ -56,8 +56,10 @@ public class Konyvtarteszt {
     public void datumteszt() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
-        c.getTime();
+        c.getTime();        
         System.out.println(df.format(c.getTimeInMillis()));
+        c.add(Calendar.DATE,21);
+        System.out.println("meghosszabbítva: "+df.format(c.getTimeInMillis()));
     }
 
     @Test

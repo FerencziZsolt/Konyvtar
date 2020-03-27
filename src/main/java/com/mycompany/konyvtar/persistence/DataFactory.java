@@ -425,9 +425,9 @@ public class DataFactory implements DataFactoryInterface {
     @Override
     public List<Konyvtaroslevel> konyvtaroslevelei() {
         List<Konyvtaroslevel> lista = new ArrayList();
-        try{
-        String sql="select * from konyvtaroslevel order by id desc";
-        Statement statement = connection.createStatement();
+        try {
+            String sql = "select * from konyvtaroslevel order by id desc";
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -437,17 +437,26 @@ public class DataFactory implements DataFactoryInterface {
                 Konyvtaroslevel kl = new Konyvtaroslevel(id, olvasonev, targy, uzenet);
                 lista.add(kl);
             }
-        
-        }catch(SQLException se){
-            System.out.println("Hiba konyvtaroslevelei: "+se);
+
+        } catch (SQLException se) {
+            System.out.println("Hiba konyvtaroslevelei: " + se);
         }
         return lista;
     }
 
     @Override
     public void kolcsonzeshoszabbitas(int id) {
-       
-        //kölcsönzés hoszabbítása: visszahozasdatuma + 21 nap!
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, KOLCSONZESIIDO);
+        String sql = "update kolcsonzes set visszahozasdatuma=?  where kolcsonzesid='" + id + "' ";
+        try {
+            PreparedStatement prep = connection.prepareStatement(sql);
+            prep.setDate(1, new java.sql.Date(c.getTimeInMillis()));
+            prep.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Kölcsönzés hoszabbítás hiba: " + e);
+        }
     }
 
 }
